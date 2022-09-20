@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableCaching
 @EnableJpaAuditing
 @SpringBootApplication
-public class ApiApplication {
+public class WebApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ApiApplication.class, args);
+        SpringApplication.run(WebApplication.class, args);
     }
 }
