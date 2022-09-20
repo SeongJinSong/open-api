@@ -1,4 +1,4 @@
-package com.assignment.openapi.core.exception;
+package com.assignment.openapi.core.error.exception;
 
 import com.assignment.openapi.core.error.ErrorCode;
 import lombok.Getter;
