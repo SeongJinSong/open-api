@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,15 +20,22 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
-@RequestMapping(path = "/v2/search/blog")
+@RequestMapping(path = "/api")
 @RequiredArgsConstructor
 @RestController
 public class SearchController<T> {
     private final SearchFacade searchFacade;
-    @GetMapping
-    public ResponseEntity<ResponseWrapper<SearchResponse<T>>> getContentsList(
-            HttpServletRequest httpservletRequest, @Valid SearchRequest request){
-        return ResponseWrapper.ok(searchFacade.getContentsList(httpservletRequest, request), "success");
+    @GetMapping("v1/search/{contentsType}")
+    public ResponseEntity<ResponseWrapper<SearchResponse<T>>> getContentsListV1(
+              @PathVariable String contentsType
+             ,@Valid SearchRequest request){
+        return ResponseWrapper.ok(searchFacade.getContentsListV1(contentsType, request), "success");
+    }
+    @GetMapping("v2/search/{contentsType}")
+    public ResponseEntity<ResponseWrapper<SearchResponse<T>>> getContentsListV2(
+            @PathVariable String contentsType
+            ,@Valid SearchRequest request){
+        return ResponseWrapper.ok(searchFacade.getContentsListV2(contentsType, request), "success");
     }
     /**
      * DB에 저장된 History를 검색어 기반으로 그루핑해 오더링한 결과를 리턴한다.
@@ -35,7 +43,7 @@ public class SearchController<T> {
      * @param pageable default limit = 10
      * @return responseWrapper
      */
-    @GetMapping("/rank")
+    @GetMapping("v1/search/rank")
     public ResponseEntity<ResponseWrapper<Page<SearchRank>>> getPopularSearchWord(Pageable pageable){
         return ResponseWrapper.ok(searchFacade.getPopularSearchWord(pageable), "success");
     }
@@ -44,7 +52,7 @@ public class SearchController<T> {
      * Redis ZSET 을 활용하여 오더링한 결과를 리턴한다.
      * @return
      */
-    @GetMapping("/rank-new")
+    @GetMapping("v2/search/rank")
     public ResponseEntity<ResponseWrapper<List<SearchRank>>> searchRankList(){
         return ResponseWrapper.ok(searchFacade.searchRankList(), "success");
     }
