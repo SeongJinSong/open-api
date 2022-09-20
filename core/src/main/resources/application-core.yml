@@ -1,0 +1,31 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:public;OLD_INFORMATION_SCHEMA=TRUE
+      username: sa
+      password: 1234
+
+  redis:
+    database:
+      host: localhost
+      port: 6379
+    files: embedded-redisson.yml
+    embedded:
+      maxmemory: 128M
+
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
