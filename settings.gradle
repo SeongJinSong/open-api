@@ -1,0 +1,4 @@
+rootProject.name = 'open-api'
+include 'core'
+include 'web'
+
