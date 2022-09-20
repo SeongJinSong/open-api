@@ -1,0 +1,14 @@
+#TODO Web test resource가 아무것도 없는경우 default 값을 gradle 의존성 core main resource를 바라보도록 설정
+singleServerConfig:
+  idleConnectionTimeout: 10000
+  connectTimeout: 10000
+  timeout: 3000
+  retryAttempts: 3
+  retryInterval: 1500
+  subscriptionsPerConnection: 5
+  address: redis://localhost:6379
+  subscriptionConnectionMinimumIdleSize: 1
+  subscriptionConnectionPoolSize: 50
+  connectionMinimumIdleSize: 24
+  connectionPoolSize: 64
+  dnsMonitoringInterval: 5000
