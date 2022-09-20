@@ -45,8 +45,13 @@ java -jar open-api.jar
   
   - 설계시 고려사항
     - facade 계층을 추가하여, 컨트롤러단에서 내부 서비스 플로우를 숨겨서 컨트롤러단을 단순화시킴
-    - 추후 카카오 API 이외에 새로운 검색 소스가 추가될 경우를 대비하여 '카카오 검색 서비스'를 인터페이스에 의존하여 구현 
-            
+    - 추후 카카오 API 이외에 새로운 검색 소스가 추가될 경우를 대비하여 '카카오 검색 서비스'를 인터페이스에 의존하여 구현
+  
+  - 예외처리
+    - GlobalExceptionHandler를 구현하고 CustomException등록
+  
+  - 테스트
+    - SearchControllerTest로 통합테스트 구현
 
 ## 4. API 명세 및 테스트 예시
 
@@ -54,12 +59,12 @@ java -jar open-api.jar
 
 - api 명세 간단 요약
 
-| Method | Request URI        | Description    |
-|--------|--------------------|----------------|
-| GET    | api/v1/search/blog | 블로그 조회 V1         |
-| GET    | api/v1/search/rank | 검색 랭킹 조회 V1       |
-| GET    | api/v2/search/blog | 블로그 조회 V2         |
-| GET    | api/v2/search/rank | 검색 랭킹 조회 V2       |
+| Method | Request URI        | Description |
+|--------|--------------------|-------------|
+| GET    | api/v1/search/{contentsType} | 컨텐츠 조회 V1   |
+| GET    | api/v1/search/rank | 검색 랭킹 조회 V1 |
+| GET    | api/v2/search/{contentsType} | 컨텐츠 조회 V2   |
+| GET    | api/v2/search/rank | 검색 랭킹 조회 V2 |
 
 
 # 
