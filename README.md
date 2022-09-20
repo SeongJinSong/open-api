@@ -71,30 +71,38 @@ java -jar open-api.jar
 # 
 
 ```json
-// POST  localhost:8080/api/v1/scraps
-
-{
-    "userId": 1,
-    "imageUrl": "https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg",
-    "title": "title123",
-    "content": "content123"
-}
+GET  localhost:8080/api/v2/search/blog?query=https://brunch.co.kr/@tourism 여행&page=1&size=10&sort=accuracy
 
 ----------------------- ↓ response ↓ -----------------------
 
 {
-    "statusCode": 201,
-    "message": "create scrap success.",
-    "data": {
-        "scrapId": 4,
-        "userId": 1,
-        "imageUrl": "localhost:8080/resources/46507f97-8706-46fa-bd7b-3f0cb08c4fc5.jpg",
-        "title": "title123",
-        "content": "content123",
-        "views": 0,
-        "createdAt": "2022-08-24 00:07:00",
-        "modifiedAt": "2022-08-24 00:07:00"
-    }
+  "statusCode": 200,
+  "message": "success",
+  "data": {
+    "meta": {
+      "total_count": 2,
+      "pageable_count": 2,
+      "is_end": true
+    },
+    "documents": [
+      {
+        "blogname": "<개념여행>, <여행을가다, 희망을보다> 저자 정란수",
+        "contents": "브런치 연재글은 다음의 링크에서 보실 수 있습니다~ 브런치 내 제 글을 보시려면 다음의 링크를 따라가주세요 ^^ <b>https://brunch.co.kr/@tourism</b> 정란수의 브런치 <b>여행</b>다니면서 일하는 &#34;한량&#34;! &lt;개념<b>여행</b>&gt; 저자이면서, 관광개발 컨설팅을 하고 돌아다님 www.tourism.re.kr , www.facebook.com/projectsoo brunch.co.kr...",
+        "datetime": "2016-01-17T23:24:00.000+09:00",
+        "thumbnail": "https://search4.kakaocdn.net/argon/130x130_85_c/7dtORyQIlj3",
+        "title": "[<b>여행</b>?희망!] _ 브런치 연재글 다음 메인에 선정",
+        "url": "https://blog.naver.com/jeongransoo/220600431408"
+      },
+      {
+        "blogname": "<개념여행>, <여행을가다, 희망을보다> 저자 정란수",
+        "contents": "이른바 &#34;헬조선&#34;을 극복하기 위해 <b>여행</b>에서 만난 다양한 이야기를 풀어나가려 합니다. 링크는 다음과 같습니다 ^^ <b>https://brunch.co.kr/@tourism</b> 정란수의 브런치 <b>여행</b>다니면서 일하는 &#34;한량&#34;! &lt;개념<b>여행</b>&gt;이라는 책을 펴냈다가 출판사에 미안하게 되어버림. brunch.co.kr 아마도 이 블로그에도 내용을 요약해서 소개할...",
+        "datetime": "2015-10-17T16:44:00.000+09:00",
+        "thumbnail": "https://search1.kakaocdn.net/argon/130x130_85_c/EvscfrxMzLn",
+        "title": "<b>여행</b>을 통해 희망을 발견하기 브런치 연재 시작",
+        "url": "https://blog.naver.com/jeongransoo/220511478588"
+      }
+    ]
+  }
 }
 
 ```
@@ -108,42 +116,82 @@ QueryDsl을 활용하여 History테이블의 검색어별로 Grouping하고 Orde
 # 
 
 ```json
-GET  localhost:8080/api/v1/scraps?page=2&size=3
+GET  localhost:8080/api/v1/search/rank?page=0&size=10
 
 ----------------------- ↓ response ↓ -----------------------
 
 {
-    "statusCode": 200,
-    "message": "get all scrap summary success.",
-    "data": [
-        {
-            "scrapId": 7,
-            "userId": 1,
-            "thumbnailUrl": "localhost:8080/resources/thumb_15ce1631-670c-4aaa-b4a3-7d3f989ff847.jpg",
-            "title": "title123",
-            "views": 0,
-            "createdAt": "2022-08-24 00:08:26",
-            "modifiedAt": "2022-08-24 00:08:26"
-        },
-        {
-            "scrapId": 8,
-            "userId": 1,
-            "thumbnailUrl": "localhost:8080/resources/thumb_d5cb426a-6a0a-46ac-8030-818c5affc759.jpg",
-            "title": "title123",
-            "views": 0,
-            "createdAt": "2022-08-24 00:08:27",
-            "modifiedAt": "2022-08-24 00:08:27"
-        },
-        {
-            "scrapId": 9,
-            "userId": 1,
-            "thumbnailUrl": "localhost:8080/resources/thumb_9419b82f-e3e0-4bd0-9869-8f39106b2e70.jpg",
-            "title": "title123",
-            "views": 0,
-            "createdAt": "2022-08-24 00:08:28",
-            "modifiedAt": "2022-08-24 00:08:28"
-        }
-    ]
+  "statusCode": 200,
+  "message": "success",
+  "data": {
+    "content": [
+      {
+        "query": "정말 저에게 큰 도움이 되는 과제였습니다.",
+        "count": 64
+      },
+      {
+        "query": "더욱 성장하는 계기가 되게 해주셔서 감사합니다.",
+        "count": 57
+      },
+      {
+        "query": "공부공",
+        "count": 33
+      },
+      {
+        "query": "스타벅",
+        "count": 30
+      },
+      {
+        "query": "나는 할수 있",
+        "count": 26
+      },
+      {
+        "query": "천재",
+        "count": 23
+      },
+      {
+        "query": "치킨",
+        "count": 20
+      },
+      {
+        "query": "최선을 다하자",
+        "count": 16
+      },
+      {
+        "query": "운동을 꾸준히 하",
+        "count": 16
+      },
+      {
+        "query": "축구",
+        "count": 14
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+      },
+      "offset": 0,
+      "pageNumber": 0,
+      "pageSize": 10,
+      "unpaged": false,
+      "paged": true
+    },
+    "last": false,
+    "totalPages": 2,
+    "totalElements": 15,
+    "size": 10,
+    "number": 0,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "first": true,
+    "numberOfElements": 10,
+    "empty": false
+  }
 }
 ```
 
@@ -156,23 +204,38 @@ Redis Sorted Set에 검색어별 카운트 조회수 반영
 # 
 
 ```json
-GET  localhost:8080/api/v1/scraps/2
+GET  localhost:8080/api/v2/search/blog?query=https://brunch.co.kr/@tourism 여행&page=1&size=10&sort=accuracy
 
 ----------------------- ↓ response ↓ -----------------------
 
 {
-    "statusCode": 200,
-    "message": "get scrap details success.",
-    "data": {
-        "scrapId": 2,
-        "userId": 1,
-        "imageUrl": "localhost:8080/resources/18ad4195-9588-4958-8b3f-43dfd3198ad4.jpg",
-        "title": "title123",
-        "content": "content123",
-        "views": 2,
-        "createdAt": "2022-08-24 00:01:11",
-        "modifiedAt": "2022-08-24 00:01:11"
-    }
+  "statusCode": 200,
+  "message": "success",
+  "data": {
+    "meta": {
+      "total_count": 2,
+      "pageable_count": 2,
+      "is_end": true
+    },
+    "documents": [
+      {
+        "blogname": "<개념여행>, <여행을가다, 희망을보다> 저자 정란수",
+        "contents": "브런치 연재글은 다음의 링크에서 보실 수 있습니다~ 브런치 내 제 글을 보시려면 다음의 링크를 따라가주세요 ^^ <b>https://brunch.co.kr/@tourism</b> 정란수의 브런치 <b>여행</b>다니면서 일하는 &#34;한량&#34;! &lt;개념<b>여행</b>&gt; 저자이면서, 관광개발 컨설팅을 하고 돌아다님 www.tourism.re.kr , www.facebook.com/projectsoo brunch.co.kr...",
+        "datetime": "2016-01-17T23:24:00.000+09:00",
+        "thumbnail": "https://search4.kakaocdn.net/argon/130x130_85_c/7dtORyQIlj3",
+        "title": "[<b>여행</b>?희망!] _ 브런치 연재글 다음 메인에 선정",
+        "url": "https://blog.naver.com/jeongransoo/220600431408"
+      },
+      {
+        "blogname": "<개념여행>, <여행을가다, 희망을보다> 저자 정란수",
+        "contents": "이른바 &#34;헬조선&#34;을 극복하기 위해 <b>여행</b>에서 만난 다양한 이야기를 풀어나가려 합니다. 링크는 다음과 같습니다 ^^ <b>https://brunch.co.kr/@tourism</b> 정란수의 브런치 <b>여행</b>다니면서 일하는 &#34;한량&#34;! &lt;개념<b>여행</b>&gt;이라는 책을 펴냈다가 출판사에 미안하게 되어버림. brunch.co.kr 아마도 이 블로그에도 내용을 요약해서 소개할...",
+        "datetime": "2015-10-17T16:44:00.000+09:00",
+        "thumbnail": "https://search1.kakaocdn.net/argon/130x130_85_c/EvscfrxMzLn",
+        "title": "<b>여행</b>을 통해 희망을 발견하기 브런치 연재 시작",
+        "url": "https://blog.naver.com/jeongransoo/220511478588"
+      }
+    ]
+  }
 }
 
 ```
@@ -186,28 +249,54 @@ Redis Sorted Set을 활용하여 검색어 별 랭킹 제공
 # 
 
 ```json
-PATCH  localhost:8080/api/v1/scraps/2
-
-{
-    "userId": 1,
-    "title": "after-title"
-}
-
+GET  localhost:8080/api/v2/search/rank
+        
 ----------------------- ↓ response ↓ -----------------------
-
 {
-    "statusCode": 200,
-    "message": "patch scrap success.",
-    "data": {
-        "scrapId": 2,
-        "userId": 1,
-        "imageUrl": "localhost:8080/resources/18ad4195-9588-4958-8b3f-43dfd3198ad4.jpg",
-        "title": "after-title",
-        "content": "content123",
-        "views": 2,
-        "createdAt": "2022-08-24 00:01:11",
-        "modifiedAt": "2022-08-24 00:10:40"
+  "statusCode": 200,
+  "message": "success",
+  "data": [
+    {
+      "query": "정말 저에게 큰 도움이 되는 과제였습니다.",
+      "count": 64
+    },
+    {
+      "query": "더욱 성장하는 계기가 되게 해주셔서 감사합니다.",
+      "count": 57
+    },
+    {
+      "query": "공부공",
+      "count": 33
+    },
+    {
+      "query": "스타벅",
+      "count": 30
+    },
+    {
+      "query": "나는 할수 있",
+      "count": 26
+    },
+    {
+      "query": "천재",
+      "count": 23
+    },
+    {
+      "query": "치킨",
+      "count": 20
+    },
+    {
+      "query": "최선을 다하자",
+      "count": 16
+    },
+    {
+      "query": "운동을 꾸준히 하",
+      "count": 16
+    },
+    {
+      "query": "노력하",
+      "count": 2
     }
+  ]
 }
 ```
 
