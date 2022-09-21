@@ -1,6 +1,6 @@
 # readme.md
 
-# grip-assignment
+# assignment
 
 ## 0. 개발 환경
 
