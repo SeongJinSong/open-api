@@ -3,6 +3,7 @@ package com.assignment.openapi.web.searchcomp2.application;
 import com.assignment.openapi.core.redis.service.QueryCountService;
 import com.assignment.openapi.web.searchcomp1.service.SearchHistoryService;
 import com.assignment.openapi.web.searchcomp1.service.SearchRankService;
+import com.assignment.openapi.web.searchcomp2.Comp2AppUtils;
 import com.assignment.openapi.web.searchcomp2.presentation.dto.SearchComp2Request;
 import com.assignment.openapi.web.searchcomp2.presentation.dto.SearchComp2Response;
 import com.assignment.openapi.web.searchcomp2.service.SearchComp2Service;
@@ -24,13 +25,6 @@ public class SearchFacade2<T> {
 
         //TODO 조회와 삽입이 분리되면 동시성 문제가 발생할 수 있어 lua-script 기반으로 돌리는 방법도 찾아보자
         searchRankService.addSearchRequest(request.getQuery());
-        return searchService.getContentsList(makeURI("v1/search/",contentsType), makeQueryString(request));
-    }
-
-    private String makeQueryString(SearchComp2Request request){
-        return "query="+request.getQuery()+"&sort="+request.getSort()+"&start="+(request.getStart()==null?"0":request.getStart())+"&display="+(request.getDisplay()==null?"0":request.getDisplay());
-    }
-    private String makeURI(String uri, String contentsType){
-        return uri+contentsType;
+        return searchService.getContentsList(Comp2AppUtils.makeURI("v1/search/",contentsType), Comp2AppUtils.makeQueryString(request));
     }
 }
