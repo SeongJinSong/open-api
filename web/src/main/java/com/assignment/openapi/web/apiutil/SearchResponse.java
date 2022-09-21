@@ -1,4 +1,13 @@
 package com.assignment.openapi.web.apiutil;
 
-public class SearchResponse {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
+@Getter
+@AllArgsConstructor
+public class SearchResponse implements Serializable {
 }

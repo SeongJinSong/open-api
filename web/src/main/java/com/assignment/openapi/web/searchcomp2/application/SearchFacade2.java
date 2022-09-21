@@ -17,8 +17,6 @@ import javax.validation.Valid;
 public class SearchFacade2<T> {
     private final SearchComp2Service searchService;
     private final SearchRankService searchRankService;
-    private final SearchHistoryService searchHistoryService;
-    private final QueryCountService queryCountService;
 
     public SearchComp2Response<T> getContentsListV2(String contentsType, @Valid SearchComp2Request request) {
 //        searchHistoryService.saveRequest(request);
