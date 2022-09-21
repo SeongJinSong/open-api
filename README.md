@@ -24,7 +24,11 @@
 ```bash
 java -jar web-0.0.1-SNAPSHOT.jar
 ```
-
+- 주의사항
+  - api에서 sort컬럼은 validation 체크를 하기 때문에 올바른값 넣어줘야한다.
+    - exceptionhandler 시간상 못해서, Bad Request로만 날아온다.
+    - 카카오 sort Pattern(regexp = "accuracy|recency")
+    - 네이버 sort Pattern(regexp = "sim|date")
 
 ## 3. 애플리케이션 구현 과정 및 선택 구현 사항
 
