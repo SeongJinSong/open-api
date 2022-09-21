@@ -22,15 +22,16 @@
 ## 2. 애플리케이션 실행 방법
 
 ```bash
-java -jar open-api.jar
+java -jar web-0.0.1-SNAPSHOT.jar
 ```
 
 
 ## 3. 애플리케이션 구현 과정 및 선택 구현 사항
 
 - 검색 랭킹
-  - V1 레디스에 Atomic 자료형을 사용하여 동시성 처리
-  - V2 레디스 zset 자료구조를 활용
+  - V1 History DB에 저장된 로그를 기반으로 검색어별 카운트를 조회(querydsl)
+    - V1 조회 서비스를 사용하는 경우는 ZSET을 업데이트하지않아 V2랭킹서비스에 집계가 안될 수 있음
+  - V2 레디스 zset 자료구조를 활용하여 검색어 랭킹 조회(1~10등)
   
 - 컨텐츠 조회 서비스
   - 컨트롤러 입출력 모델
@@ -39,11 +40,16 @@ java -jar open-api.jar
         ![SCRAP](resources/search_request_response.png)
       
   - 비즈니스 플로우
-    - request history를 DB에 저장
-    - 레디스에 검색결과에 따른 count 추가
-    - 트래픽이 많고, 저장되어 있는 데이터가 많음을 염두하여, 10초간 최근 검색한 결과내용 레디스에 캐싱
+    1. request history를 DB에 저장
+      - 트래픽을 고려하여 DB 저장하는 로직을 CompletableFuture를 적용하여 Async하게 처리하여 성능향상을 꾀함
+    2. 레디스에 같은 같은 내용으로 검색한 내용이 있는지 먼저 조회후, 없으면 API를 호출
+      - 트래픽이 많고, 저장되어 있는 데이터가 많음을 염두하여, 10초간 최근 검색한 결과내용 레디스에 캐싱
       - key는 `host+"/"+ uri +"?" + queryString`, value는 SearchResponse<T>를 캐싱
-      - 10초안에 똑같은 request를 호출한 경우 api호출하지 않음
+      - 10초안에 똑같은 request를 호출한 경우 api호출하지 않고 캐시에 저장된 내용을 전달
+    3. 레디스에 검색어와 검색요청회수 update
+      - V1 : redis에 Atomic 자료형을 사용하여 검색어에 따른 검색 횟수 업데이트
+      - V2 : Sorted Set을 활용
+      
   
   - 설계시 고려사항
     - facade 계층을 추가하여, 컨트롤러단에서 내부 서비스 플로우를 숨겨서 컨트롤러단을 단순화시킴
