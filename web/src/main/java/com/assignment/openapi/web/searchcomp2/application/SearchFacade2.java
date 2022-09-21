@@ -1,21 +1,15 @@
 package com.assignment.openapi.web.searchcomp2.application;
 
 import com.assignment.openapi.core.redis.service.QueryCountService;
-import com.assignment.openapi.core.search.domain.SearchRank;
-import com.assignment.openapi.web.searchcomp1.service.SearchComp1Service;
 import com.assignment.openapi.web.searchcomp1.service.SearchHistoryService;
 import com.assignment.openapi.web.searchcomp1.service.SearchRankService;
-import com.assignment.openapi.web.apiutil.SearchService;
 import com.assignment.openapi.web.searchcomp2.presentation.dto.SearchRequest;
 import com.assignment.openapi.web.searchcomp2.presentation.dto.SearchResponse;
 import com.assignment.openapi.web.searchcomp2.service.SearchComp2Service;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +28,7 @@ public class SearchFacade2<T> {
     }
 
     private String makeQueryString(SearchRequest request){
-        return "query="+request.getQuery()+"&sort="+request.getSort()+"&start="+request.getStart()+"&display="+request.getDisplay();
+        return "query="+request.getQuery()+"&sort="+request.getSort()+"&start="+(request.getStart()==null?"0":request.getStart())+"&display="+(request.getDisplay()==null?"0":request.getDisplay());
     }
     private String makeURI(String uri, String contentsType){
         return uri+contentsType;

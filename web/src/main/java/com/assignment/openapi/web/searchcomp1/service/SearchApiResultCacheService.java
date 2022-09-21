@@ -1,7 +1,6 @@
 package com.assignment.openapi.web.searchcomp1.service;
 
 import com.assignment.openapi.core.redis.service.ApiResultCacheService;
-import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchResponse;
 import com.assignment.openapi.web.searchcomp1.repository.SearchResponseDao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
