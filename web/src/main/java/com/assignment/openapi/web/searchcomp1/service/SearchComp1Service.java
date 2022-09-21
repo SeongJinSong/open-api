@@ -1,6 +1,6 @@
 package com.assignment.openapi.web.searchcomp1.service;
 
-import com.assignment.openapi.web.apiutil.ApiService;
+import com.assignment.openapi.web.searchcomp1.api.Comp1ApiService;
 import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SearchComp1Service implements SearchService {
     private final SearchApiResultCacheService searchApiResultCacheService;
-    private final ApiService apiService;
+    private final Comp1ApiService apiService;
     String host = "https://dapi.kakao.com";
 
     @Override
