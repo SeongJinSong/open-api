@@ -11,10 +11,10 @@ import java.sql.SQLException;
 
 @Configuration
 public class H2DBConfig {
-    @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.hikari")
-    public DataSource dataSource() throws SQLException {
-        Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9093").start();
-        return DataSourceBuilder.create().build();
-    }
+//    @Bean
+//    @ConfigurationProperties(prefix = "spring.datasource.hikari")
+//    public DataSource dataSource() throws SQLException {
+//        Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9093").start();
+//        return DataSourceBuilder.create().build();
+//    }
 }

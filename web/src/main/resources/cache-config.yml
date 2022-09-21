@@ -1,0 +1,3 @@
+ClientsMap:
+  ttl: 1200000
+  maxIdleTime: 600000

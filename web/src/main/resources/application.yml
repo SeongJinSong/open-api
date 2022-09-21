@@ -1,3 +1,10 @@
 spring:
   profiles:
     include: core
+  redis:
+    database:
+      host: localhost
+      port: 6379
+    files: embedded-redisson.yml
+    embedded:
+      maxmemory: 128M

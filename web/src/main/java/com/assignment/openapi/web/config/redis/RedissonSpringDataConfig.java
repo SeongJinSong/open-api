@@ -2,6 +2,8 @@ package com.assignment.openapi.web.config.redis;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -14,6 +16,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.util.ResourceUtils;
 import redis.embedded.RedisServer;
@@ -21,6 +24,7 @@ import redis.embedded.RedisServer;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Slf4j
 @Configuration
@@ -51,7 +55,15 @@ public class RedissonSpringDataConfig {
 
     @PostConstruct
     public void initRedissonClient() throws IOException {
-        File redisConfig = ResourceUtils.getFile("classpath:" + redisConfigUrl);
+//        File redisConfig = ResourceUtils.getFile("classpath:" + redisConfigUrl);
+        ClassPathResource classPathResource = new ClassPathResource(redisConfigUrl);
+        InputStream inputStream = classPathResource.getInputStream();
+        File redisConfig = File.createTempFile("temp", ".jpg");
+        try{
+            FileUtils.copyInputStreamToFile(inputStream, redisConfig);
+        }finally {
+            IOUtils.closeQuietly(inputStream);
+        }
         Config config = Config.fromYAML(redisConfig);
 
         client = Redisson.create(config);
