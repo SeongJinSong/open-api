@@ -25,11 +25,12 @@ public class Comp1ApiService implements ApiService {
                 .orElseThrow(()->{throw new NetworkException(ErrorCode.REQUEST_TIMEOUT_EXCEPTION);});
     }
     public SearchResponse getRetry(String host, String urlTemplate, String host2, String urlTemplate2) {
+        System.out.println("host = " + host + ", urlTemplate = " + urlTemplate + ", host2 = " + host2 + ", urlTemplate2 = " + urlTemplate2);
         return Optional.ofNullable(comp1WebClientRequester.getWebClient(host+urlTemplate)
                         .bodyToMono(SearchResponse.class)
                         .onErrorResume(error -> {
                             log.info("comp1ApiCall Error = {}", error);
-                            return comp2WebClientRequester.getWebClient(host+urlTemplate2).bodyToMono(SearchComp2Response.class);
+                            return comp2WebClientRequester.getWebClient(host2+urlTemplate2).bodyToMono(SearchResponse.class);
                         }).block()
                 )
                 .orElseThrow(()->{throw new NetworkException(ErrorCode.REQUEST_TIMEOUT_EXCEPTION);});
