@@ -1,6 +1,7 @@
 package com.assignment.openapi.web.searchcomp1.presentation;
 
 import com.assignment.openapi.core.search.domain.SearchRank;
+import com.assignment.openapi.web.apiutil.SearchResponse;
 import com.assignment.openapi.web.searchcomp1.application.SearchFacade;
 import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchComp1Request;
 import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchComp1Response;
@@ -35,6 +36,12 @@ public class SearchController<T> {
             @PathVariable String contentsType
             ,@Valid SearchComp1Request request){
         return ResponseWrapper.ok(searchFacade.getContentsListV2(contentsType, request), "success");
+    }
+    @GetMapping("v3/search/{contentsType}")
+    public ResponseEntity<ResponseWrapper<SearchResponse>> getContentsListV3(
+            @PathVariable String contentsType
+            ,@Valid SearchComp1Request request){
+        return ResponseWrapper.ok(searchFacade.getContentsListV3(contentsType, request), "success");
     }
     /**
      * DB에 저장된 History를 검색어 기반으로 그루핑해 오더링한 결과를 리턴한다.

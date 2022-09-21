@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Setter //setter가 있어야 argumentResolver에서 객체로 매핑 가능한거 같다.
 @AllArgsConstructor
 @NoArgsConstructor
-@Embeddable
+@Builder
 @ToString
 public class SearchComp2Request {
     @NotBlank

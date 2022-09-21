@@ -47,6 +47,13 @@ public class SearchFacade<T> {
         return searchService.getContentsList(Comp1AppUtils.makeURI("v2/search/",contentsType), Comp1AppUtils.makeQueryString(request));
     }
 
+    @Transactional
+    public SearchResponse getContentsListV3(String contentsType, @Valid SearchComp1Request request) {
+        searchHistoryService.saveRequest(request);
+        searchRankService.addSearchRequest(request.getQuery());
+        return retryFacade.getContentsList(contentsType, request);
+    }
+
     @Transactional(readOnly = true)
     public Page<SearchRank> getPopularSearchWord(Pageable pageable){
         return searchHistoryService.getPopularSearchWord(pageable);

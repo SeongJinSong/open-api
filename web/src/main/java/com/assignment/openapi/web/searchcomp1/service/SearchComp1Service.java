@@ -1,8 +1,11 @@
 package com.assignment.openapi.web.searchcomp1.service;
 
+import com.assignment.openapi.web.apiutil.SearchResponse;
 import com.assignment.openapi.web.apiutil.SearchService;
+import com.assignment.openapi.web.searchcomp1.Comp1AppUtils;
 import com.assignment.openapi.web.searchcomp1.api.Comp1ApiService;
 import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchComp1Response;
+import com.assignment.openapi.web.searchcomp2.Comp2AppUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,11 +16,10 @@ import org.springframework.stereotype.Service;
 public class SearchComp1Service implements SearchService {
     private final SearchApiResultCacheService searchApiResultCacheService;
     private final Comp1ApiService apiService;
-    String host = "https://dapi.kakao.com";
 
     @Override
     public SearchComp1Response getContentsList(String uri, String queryString) {
-        String key = getComp1ApiRedisKey(uri, queryString);
+        String key = Comp1AppUtils.getComp1ApiRedisKey(uri, queryString);
         /*
             TODO
              1. @Cacheable을 적용하여 분기 삭제
@@ -27,8 +29,8 @@ public class SearchComp1Service implements SearchService {
         SearchComp1Response response = (SearchComp1Response)searchApiResultCacheService.getApiResultCache(key);
         if(response==null){
             //api 호출
-            log.info("@@@@@@@ api 직접 호출 key={}", key);
-            response = apiService.get(host, getUrlTemplate(uri, queryString));
+            log.info("@@@@@@@ api call directly key={}", key);
+            response = apiService.get(Comp1AppUtils.host, Comp1AppUtils.getUrlTemplate(uri, queryString));
             //레디스에 api 검색결과 저장
             searchApiResultCacheService.saveApiResultCache(key, response);
         }
@@ -36,10 +38,18 @@ public class SearchComp1Service implements SearchService {
 
         return response;
     }
-    private String getComp1ApiRedisKey(String uri, String queryString) {
-        return host+"/"+ uri +"?" + queryString;
-    }
-    private String getUrlTemplate(String uri, String queryString){
-        return "/"+uri+"?"+queryString;
+    public SearchResponse getComp1IfErrorRetryComp2Service(String uri1, String queryString1, String url2, String queryString2) {
+        String key = Comp1AppUtils.getComp1ApiRedisKey(uri1, queryString1);
+
+        SearchResponse response = (SearchResponse)searchApiResultCacheService.getApiResultCache(key);
+        if(response==null){
+            //api 호출
+            log.info("@@@@@@@ api call directly key={}", key);
+            response = apiService.getRetry(Comp1AppUtils.host, Comp1AppUtils.getUrlTemplate(uri1, queryString1),
+                    Comp2AppUtils.host, Comp2AppUtils.getUrlTemplate(url2, queryString2));
+            //레디스에 api 검색결과 저장
+            searchApiResultCacheService.saveApiResultCache(key, response);
+        }
+        return response;
     }
 }
