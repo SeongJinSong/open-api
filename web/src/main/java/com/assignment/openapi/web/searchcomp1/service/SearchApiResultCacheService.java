@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SearchApiResultCacheService implements ApiResultCacheService {
     private final SearchResponseDao searchResponseDao;
-    public SearchResponse getApiResultCache(String key) {
+    public Object getApiResultCache(String key) {
         return searchResponseDao.findById(key);
     }
 

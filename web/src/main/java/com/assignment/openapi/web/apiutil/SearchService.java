@@ -1,4 +1,4 @@
-package com.assignment.openapi.web.searchcomp1.service;
+package com.assignment.openapi.web.apiutil;
 
 
 import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchResponse;

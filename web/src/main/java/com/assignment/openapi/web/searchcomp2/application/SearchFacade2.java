@@ -1,0 +1,42 @@
+package com.assignment.openapi.web.searchcomp2.application;
+
+import com.assignment.openapi.core.redis.service.QueryCountService;
+import com.assignment.openapi.core.search.domain.SearchRank;
+import com.assignment.openapi.web.searchcomp1.service.SearchComp1Service;
+import com.assignment.openapi.web.searchcomp1.service.SearchHistoryService;
+import com.assignment.openapi.web.searchcomp1.service.SearchRankService;
+import com.assignment.openapi.web.apiutil.SearchService;
+import com.assignment.openapi.web.searchcomp2.presentation.dto.SearchRequest;
+import com.assignment.openapi.web.searchcomp2.presentation.dto.SearchResponse;
+import com.assignment.openapi.web.searchcomp2.service.SearchComp2Service;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class SearchFacade2<T> {
+    private final SearchComp2Service searchService;
+    private final SearchRankService searchRankService;
+    private final SearchHistoryService searchHistoryService;
+    private final QueryCountService queryCountService;
+
+    public SearchResponse<T> getContentsListV2(String contentsType, @Valid SearchRequest request) {
+//        searchHistoryService.saveRequest(request);
+
+        //TODO 조회와 삽입이 분리되면 동시성 문제가 발생할 수 있어 lua-script 기반으로 돌리는 방법도 찾아보자
+        searchRankService.addSearchRequest(request.getQuery());
+        return searchService.getContentsList(makeURI("v1/search/",contentsType), makeQueryString(request));
+    }
+
+    private String makeQueryString(SearchRequest request){
+        return "query="+request.getQuery()+"&sort="+request.getSort()+"&start="+request.getStart()+"&display="+request.getDisplay();
+    }
+    private String makeURI(String uri, String contentsType){
+        return uri+contentsType;
+    }
+}
