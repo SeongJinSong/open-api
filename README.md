@@ -54,6 +54,7 @@ java -jar open-api.jar
   
   - 테스트
     - SearchControllerTest로 통합테스트 구현
+      - ![img.png](resources/integration_test_result.png)
 
 ## 4. API 명세 및 테스트 예시
 
@@ -309,7 +310,16 @@ GET  localhost:8080/api/v2/search/rank
 
 ## TODO
 
-- 블로그 조회 V1
-- 검색 랭킹 조회 V1
-- 블로그 조회 V2
-- 검색 랭킹 조회 V2
+- 조회 API
+  - 실패하는 경우 네이버 API 연동하도록 설정
+    - Resilience4J, CircuitBreaker를 이용한 재처리 적용
+  - 현업에서 사용하는 캐싱 알고리즘 조사 후 적용
+    - 현재는 query parameter를 기준으로 캐싱하지만, 너무 메모리를 비효율적으로 사용하게 된다.
+- 아키텍처
+  - web과 api를 모듈을 분리하고 ApiService가 SearchResponse에 의존하는 부분 수정
+- 레디스
+  - 레디스가 뜰때 DB 정보를 바탕으로 query count 세팅
+  - redis write-bebind 동작을 활용하여 DB에 동기화
+- 테스트
+  - 서비스, 리포지토리단 작성
+  - 예외처리 테스트 코드 작성
