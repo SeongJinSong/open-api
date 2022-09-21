@@ -42,6 +42,8 @@ java -jar open-api.jar
     - request history를 DB에 저장
     - 레디스에 검색결과에 따른 count 추가
     - 트래픽이 많고, 저장되어 있는 데이터가 많음을 염두하여, 10초간 최근 검색한 결과내용 레디스에 캐싱
+      - key는 `host+"/"+ uri +"?" + queryString`, value는 SearchResponse<T>를 캐싱
+      - 10초안에 똑같은 request를 호출한 경우 api호출하지 않음
   
   - 설계시 고려사항
     - facade 계층을 추가하여, 컨트롤러단에서 내부 서비스 플로우를 숨겨서 컨트롤러단을 단순화시킴
