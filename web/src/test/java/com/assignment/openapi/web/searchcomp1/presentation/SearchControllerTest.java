@@ -22,14 +22,14 @@ class SearchControllerTest {
     private MockMvc mockMvc;
 
     @Order(1)
-    @DisplayName("V1 API IntegrationTest")
+    @DisplayName("1 API 조회 IntegrationTest")
     @TestMethodOrder(MethodOrderer.DisplayName.class)
     @Nested
-    class V1ApiTest{
-        @DisplayName("1. 블로그 리스트 조회")
+    class ApiTest1{
+        @DisplayName("1-1. 블로그 리스트 조회 V1")
         @Test
         void getBlogListV1() throws Exception {
-            mockMvc.perform(get("/api/v1/search/blog?query=https://brunch.co.kr/@tourism 여행&page=1&size=10&sort=1")
+            mockMvc.perform(get("/api/v1/search/blog?query=https://brunch.co.kr/@tourism 여행&page=1&size=10&sort=accuracy")
                             .header("host", "localhost:8080")
                             .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                             .accept(MediaType.APPLICATION_JSON)
@@ -38,10 +38,10 @@ class SearchControllerTest {
                     .andDo(print());
         }
 
-        @DisplayName("2. 랭킹 조회")
+        @DisplayName("2-1. 블로그 리스트 조회 V2")
         @Test
         void getBlogListV2() throws Exception {
-            mockMvc.perform(get("/api/v2/search/blog?query=https://brunch.co.kr/@tourism 여행&page=1&size=10&sort=1")
+            mockMvc.perform(get("/api/v2/search/blog?query=https://brunch.co.kr/@tourism 여행&page=1&size=10&sort=accuracy")
                             .header("host", "localhost:8080")
                             .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                             .accept(MediaType.APPLICATION_JSON)
@@ -52,11 +52,11 @@ class SearchControllerTest {
     }
 
     @Order(2)
-    @DisplayName("V2 API IntegrationTest")
+    @DisplayName("2 API 랭킹 IntegrationTest")
     @TestMethodOrder(MethodOrderer.DisplayName.class)
     @Nested
-    class V2ApiTest{
-        @DisplayName("1. 블로그 리스트 조회")
+    class ApiTest2{
+        @DisplayName("2-1. 랭킹조회 V1")
         @Test
         void getRankV1() throws Exception {
             mockMvc.perform(get("/api/v1/search/rank?page=0&size=10")
@@ -67,10 +67,36 @@ class SearchControllerTest {
                     .andExpect(status().isOk())
                     .andDo(print());
         }
-        @DisplayName("2. 랭킹 조회")
+        @DisplayName("2-2. 랭킹 조회 V2")
         @Test
         void getRankV2() throws Exception {
             mockMvc.perform(get("/api/v2/search/rank")
+                            .header("host", "localhost:8080")
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                            .accept(MediaType.APPLICATION_JSON)
+                    )
+                    .andExpect(status().isOk())
+                    .andDo(print());
+        }
+    }
+    @Order(3)
+    @DisplayName("3. API 재처리 IntegrationTest")
+    class V3ApiTest{
+        @DisplayName("1. 블로그 리스트 조회 첫번째 정상")
+        @Test
+        void getRetry1() throws Exception {
+            mockMvc.perform(get("/api/v3/search/blog?query=여행&page=1&size=10&sort=accuracy")
+                            .header("host", "localhost:8080")
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                            .accept(MediaType.APPLICATION_JSON)
+                    )
+                    .andExpect(status().isOk())
+                    .andDo(print());
+        }
+        @DisplayName("2. 블로그 리스트 조회 첫번째 에러로 두번째로 재시도")
+        @Test
+        void getRetry2() throws Exception {
+            mockMvc.perform(get("/api/v3/search/blog?query=여행&page=1&size=10&sort=accuracy")
                             .header("host", "localhost:8080")
                             .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                             .accept(MediaType.APPLICATION_JSON)
