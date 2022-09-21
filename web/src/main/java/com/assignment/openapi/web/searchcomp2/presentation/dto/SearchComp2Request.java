@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Embeddable
 @ToString
-public class SearchRequest {
+public class SearchComp2Request {
     @NotBlank
     @NotNull
     private String query;
