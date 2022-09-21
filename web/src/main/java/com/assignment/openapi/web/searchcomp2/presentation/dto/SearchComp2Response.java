@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-public class SearchResponse<T> implements Serializable {
+public class SearchComp2Response<T> implements Serializable {
     String lastBuildDate;
     long total;
     int start;

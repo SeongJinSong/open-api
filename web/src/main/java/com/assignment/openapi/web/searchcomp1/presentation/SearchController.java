@@ -2,8 +2,8 @@ package com.assignment.openapi.web.searchcomp1.presentation;
 
 import com.assignment.openapi.core.search.domain.SearchRank;
 import com.assignment.openapi.web.searchcomp1.application.SearchFacade;
-import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchRequest;
-import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchResponse;
+import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchComp1Request;
+import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchComp1Response;
 import com.assignment.openapi.web.wrapper.ResponseWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -26,15 +25,15 @@ import java.util.List;
 public class SearchController<T> {
     private final SearchFacade searchFacade;
     @GetMapping("v1/search/{contentsType}")
-    public ResponseEntity<ResponseWrapper<SearchResponse<T>>> getContentsListV1(
+    public ResponseEntity<ResponseWrapper<SearchComp1Response<T>>> getContentsListV1(
               @PathVariable String contentsType
-             ,@Valid SearchRequest request){
+             ,@Valid SearchComp1Request request){
         return ResponseWrapper.ok(searchFacade.getContentsListV1(contentsType, request), "success");
     }
     @GetMapping("v2/search/{contentsType}")
-    public ResponseEntity<ResponseWrapper<SearchResponse<T>>> getContentsListV2(
+    public ResponseEntity<ResponseWrapper<SearchComp1Response<T>>> getContentsListV2(
             @PathVariable String contentsType
-            ,@Valid SearchRequest request){
+            ,@Valid SearchComp1Request request){
         return ResponseWrapper.ok(searchFacade.getContentsListV2(contentsType, request), "success");
     }
     /**

@@ -2,7 +2,7 @@ package com.assignment.openapi.web.searchcomp1.service;
 
 import com.assignment.openapi.core.search.domain.SearchRank;
 import com.assignment.openapi.core.search.comp1.SearchHistory;
-import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchRequest;
+import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchComp1Request;
 import com.assignment.openapi.web.searchcomp1.repository.SearchHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class SearchHistoryComp1Service implements SearchHistoryService {
     private final SearchHistoryRepository searchRepository;
     private final Executor threadPoolTaskExecutor;
     @Override
-    public void saveRequest(SearchRequest request) {
+    public void saveRequest(SearchComp1Request request) {
         CompletableFuture.runAsync(() -> searchRepository.save(SearchHistory.builder()
                 .query(request.getQuery())
                 .page(request.getPage())

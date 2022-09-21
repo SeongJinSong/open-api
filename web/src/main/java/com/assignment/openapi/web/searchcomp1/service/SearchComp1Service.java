@@ -2,7 +2,7 @@ package com.assignment.openapi.web.searchcomp1.service;
 
 import com.assignment.openapi.web.apiutil.SearchService;
 import com.assignment.openapi.web.searchcomp1.api.Comp1ApiService;
-import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchResponse;
+import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchComp1Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class SearchComp1Service implements SearchService {
     String host = "https://dapi.kakao.com";
 
     @Override
-    public SearchResponse getContentsList(String uri, String queryString) {
+    public SearchComp1Response getContentsList(String uri, String queryString) {
         String key = getComp1ApiRedisKey(uri, queryString);
         /*
             TODO
@@ -24,7 +24,7 @@ public class SearchComp1Service implements SearchService {
              2. API자체를 캐싱하는건 Client단에서 어울릴만한 일이다. reactQuery가 그런비슷한 역할을 하기도한다.
              서버단에서는 뭔가 서버단에서 어울릴만한 캐싱 알고리즘을 찾아보아야 할 것 같다.
          */
-        SearchResponse response = (SearchResponse)searchApiResultCacheService.getApiResultCache(key);
+        SearchComp1Response response = (SearchComp1Response)searchApiResultCacheService.getApiResultCache(key);
         if(response==null){
             //api 호출
             log.info("@@@@@@@ api 직접 호출 key={}", key);

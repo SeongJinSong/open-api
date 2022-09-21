@@ -1,6 +1,7 @@
 package com.assignment.openapi.web.searchcomp2.api;
 
 import com.assignment.openapi.web.apiutil.WebClientRequester;
+import com.assignment.openapi.web.searchcomp2.AppInfo;
 import io.netty.handler.logging.LogLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -31,8 +32,8 @@ public class Comp2WebClientRequester implements WebClientRequester {
                     HttpClientRequest httpRequest = clientHttpRequest.getNativeRequest();
                     httpRequest.responseTimeout(Duration.ofSeconds(5));
                 })
-                .header("X-Naver-Client-Id", "XJtfor9ELawGMydkFQeV")
-                .header( "X-Naver-Client-Secret", "sAed7tzJ85")
+                .header("X-Naver-Client-Id", AppInfo.clientId)
+                .header( "X-Naver-Client-Secret", AppInfo.clientSecret)
                 .retrieve();
     }
 }
