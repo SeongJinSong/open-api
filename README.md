@@ -41,14 +41,14 @@ java -jar web-0.0.1-SNAPSHOT.jar
       
   - 비즈니스 플로우
     1. request history를 DB에 저장
-      - 트래픽을 고려하여 DB 저장하는 로직을 CompletableFuture를 적용하여 Async하게 처리하여 성능향상을 꾀함
+       - 트래픽을 고려하여 DB 저장하는 로직을 CompletableFuture를 적용하여 Async하게 처리하여 성능향상을 꾀함
     2. 레디스에 같은 같은 내용으로 검색한 내용이 있는지 먼저 조회후, 없으면 API를 호출
-      - 트래픽이 많고, 저장되어 있는 데이터가 많음을 염두하여, 10초간 최근 검색한 결과내용 레디스에 캐싱
-      - key는 `host+"/"+ uri +"?" + queryString`, value는 SearchResponse<T>를 캐싱
-      - 10초안에 똑같은 request를 호출한 경우 api호출하지 않고 캐시에 저장된 내용을 전달
+       - 트래픽이 많고, 저장되어 있는 데이터가 많음을 염두하여, 10초간 최근 검색한 결과내용 레디스에 캐싱
+       - key는 `host+"/"+ uri +"?" + queryString`, value는 SearchResponse<T>를 캐싱
+       - 10초안에 똑같은 request를 호출한 경우 api호출하지 않고 캐시에 저장된 내용을 전달
     3. 레디스에 검색어와 검색요청회수 update
-      - V1 : redis에 Atomic 자료형을 사용하여 검색어에 따른 검색 횟수 업데이트
-      - V2 : Sorted Set을 활용
+       - V1 : redis에 Atomic 자료형을 사용하여 검색어에 따른 검색 횟수 업데이트
+       - V2 : Sorted Set을 활용
       
   
   - 설계시 고려사항
@@ -323,6 +323,8 @@ GET  localhost:8080/api/v2/search/rank
     - 현재는 query parameter를 기준으로 캐싱하지만, 너무 메모리를 비효율적으로 사용하게 된다.
 - 아키텍처
   - web과 api를 모듈을 분리하고 ApiService가 SearchResponse에 의존하는 부분 수정
+- 도메인
+  - SearchRank 엔티티 추가
 - 레디스
   - 레디스가 뜰때 DB 정보를 바탕으로 query count 세팅
   - redis write-bebind 동작을 활용하여 DB에 동기화
