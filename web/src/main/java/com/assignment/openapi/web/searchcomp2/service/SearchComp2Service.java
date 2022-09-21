@@ -1,8 +1,10 @@
-package com.assignment.openapi.web.searchcomp1.service;
+package com.assignment.openapi.web.searchcomp2.service;
 
-import com.assignment.openapi.web.apiutil.SearchService;
 import com.assignment.openapi.web.searchcomp1.api.Comp1ApiService;
-import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchResponse;
+import com.assignment.openapi.web.searchcomp2.api.Comp2ApiService;
+import com.assignment.openapi.web.searchcomp2.presentation.dto.SearchResponse;
+import com.assignment.openapi.web.searchcomp1.service.SearchApiResultCacheService;
+import com.assignment.openapi.web.apiutil.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,12 +12,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SearchComp1Service implements SearchService {
+public class SearchComp2Service {
     private final SearchApiResultCacheService searchApiResultCacheService;
-    private final Comp1ApiService apiService;
-    String host = "https://dapi.kakao.com";
+    private final Comp2ApiService apiService;
+    String host = "https://openapi.naver.com";
 
-    @Override
     public SearchResponse getContentsList(String uri, String queryString) {
         String key = getComp1ApiRedisKey(uri, queryString);
         /*

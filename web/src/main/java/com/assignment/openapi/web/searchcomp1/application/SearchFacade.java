@@ -4,9 +4,10 @@ import com.assignment.openapi.core.redis.service.QueryCountService;
 import com.assignment.openapi.core.search.domain.SearchRank;
 import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchRequest;
 import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchResponse;
+import com.assignment.openapi.web.searchcomp1.service.SearchComp1Service;
 import com.assignment.openapi.web.searchcomp1.service.SearchHistoryService;
 import com.assignment.openapi.web.searchcomp1.service.SearchRankService;
-import com.assignment.openapi.web.searchcomp1.service.SearchService;
+import com.assignment.openapi.web.apiutil.SearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SearchFacade<T> {
-    private final SearchService searchService;
+    private final SearchComp1Service searchService;
     private final SearchRankService searchRankService;
     private final SearchHistoryService searchHistoryService;
     private final QueryCountService queryCountService;
