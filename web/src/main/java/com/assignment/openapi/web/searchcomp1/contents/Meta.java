@@ -1,4 +1,4 @@
-package com.assignment.openapi.web.apiutil;
+package com.assignment.openapi.web.searchcomp1.contents;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.ToString;
