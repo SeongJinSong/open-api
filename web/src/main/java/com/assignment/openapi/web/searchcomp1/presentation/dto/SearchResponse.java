@@ -1,7 +1,5 @@
 package com.assignment.openapi.web.searchcomp1.presentation.dto;
 
-
-import com.assignment.openapi.web.searchcomp1.contents.Meta;
 import lombok.*;
 
 import java.io.Serializable;
