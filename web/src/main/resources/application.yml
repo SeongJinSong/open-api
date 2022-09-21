@@ -8,3 +8,6 @@ spring:
     files: embedded-redisson.yml
     embedded:
       maxmemory: 128M
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
