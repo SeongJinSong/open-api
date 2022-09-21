@@ -4,7 +4,6 @@ import com.assignment.openapi.core.error.ErrorCode;
 import com.assignment.openapi.core.error.exception.NetworkException;
 import com.assignment.openapi.web.apiutil.SearchResponse;
 import com.assignment.openapi.web.searchcomp1.api.Comp1WebClientRequester;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
 @Transactional
@@ -128,7 +126,7 @@ class SearchControllerTest {
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn();
-            log.info(result.getResponse().getContentAsString());
+//            log.info(result.getResponse().getContentAsString());
         }
     }
 }
