@@ -1,7 +1,6 @@
 package com.assignment.openapi.web.searchcomp1.service;
 
 
-import com.assignment.openapi.web.searchcomp1.contents.Blog;
 import com.assignment.openapi.web.searchcomp1.presentation.dto.SearchResponse;
 
 /**
